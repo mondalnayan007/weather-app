@@ -34,10 +34,10 @@ const Navbar = () => {
 
 
     useEffect(()=>{
-        fetch(`https://api.openweathermap.org/data/4.0/onecall/current?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_API_KEY}`)
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&past_days=10&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
         .then(res=>res.json())
         .then(data=>setWeatherData(data))
-    },[city])
+    },[latitude,longitude])
 
 
 
