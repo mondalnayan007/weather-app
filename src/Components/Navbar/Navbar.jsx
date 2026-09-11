@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CloudSun,
   MapPin,
@@ -12,17 +12,34 @@ import {
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [latitude,setLatitude] = useState('');
+  const [longitude,setLongitude] = useState('');
+  const [city,setCity]= useState('Dhaka');
+    const [weatherData,setWeatherData]= useState('');
+    console.log(weatherData);
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
   const handleMyLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
 
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
 
-      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      
 
     });
   }
+
+
+
+
+    useEffect(()=>{
+        fetch(`https://api.openweathermap.org/data/4.0/onecall/current?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_API_KEY}`)
+        .then(res=>res.json())
+        .then(data=>setWeatherData(data))
+    },[city])
+
+
 
   const navItems = [
     { name: "Home", href: "#" },
