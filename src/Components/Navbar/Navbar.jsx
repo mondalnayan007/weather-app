@@ -13,6 +13,17 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const handleMyLocation = ()=>{
+    navigator.geolocation.getCurrentPosition((position) => {
+      
+      const latitude = position.coords.latitude;  
+      const longitude = position.coords.longitude; 
+
+      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      
+    });
+  }
+
   const navItems = [
     { name: "Home", href: "#" },
     { name: "Forecast", href: "#forecast" },
@@ -55,6 +66,7 @@ const Navbar = () => {
 
           {/* Location */}
           <button
+          onClick={handleMyLocation}
             className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <MapPin size={17} />
@@ -96,7 +108,9 @@ const Navbar = () => {
               </a>
             ))}
 
-            <button className="mt-2 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800">
+            <button
+            onClick={handleMyLocation}
+            className="mt-2 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800">
               <MapPin size={17} />
               Use My Location
             </button>
