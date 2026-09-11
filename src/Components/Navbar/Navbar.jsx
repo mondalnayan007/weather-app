@@ -13,14 +13,14 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleMyLocation = ()=>{
+  const handleMyLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      
-      const latitude = position.coords.latitude;  
-      const longitude = position.coords.longitude; 
+
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
       console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-      
+
     });
   }
 
@@ -44,7 +44,7 @@ const Navbar = () => {
             <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
               SkyCast
             </h1>
-            
+
           </div>
         </a>
 
@@ -66,7 +66,7 @@ const Navbar = () => {
 
           {/* Location */}
           <button
-          onClick={handleMyLocation}
+            onClick={handleMyLocation}
             className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <MapPin size={17} />
@@ -109,8 +109,8 @@ const Navbar = () => {
             ))}
 
             <button
-            onClick={handleMyLocation}
-            className="mt-2 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800">
+              onClick={handleMyLocation}
+              className="mt-2 flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:hover:bg-slate-800">
               <MapPin size={17} />
               Use My Location
             </button>
