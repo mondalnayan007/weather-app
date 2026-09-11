@@ -12,12 +12,12 @@ import {
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [latitude,setLatitude] = useState('');
-  const [longitude,setLongitude] = useState('');
-  const [city,setCity]= useState('Dhaka');
-    const [weatherData,setWeatherData]= useState('');
-    console.log(weatherData);
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [city, setCity] = useState('Agailjhara,Barishal');
+  const [weatherData, setWeatherData] = useState('');
+  console.log(weatherData);
+  console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
 
   const handleMyLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -25,23 +25,29 @@ const Navbar = () => {
       setLatitude(position.coords.latitude);
       setLongitude(position.coords.longitude);
 
-      
+
 
     });
   }
 
-    // useEffect(()=>{
-    //     fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=en&format=json`)
-    //     .then(res=>res.json())
-    //     .then(data=>{console.log(data);})
-    // },[city])
+  useEffect(() => {
+    fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json`,
+      {
+        headers: {
+          'User-Agent': 'MyWeatherApp/1.0 (contact@example.com)' 
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(data => { console.log(data); })
+  }, [city])
 
 
-    useEffect(()=>{
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&past_days=10&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
-        .then(res=>res.json())
-        .then(data=>setWeatherData(data))
-    },[latitude,longitude])
+  useEffect(() => {
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&past_days=10&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
+      .then(res => res.json())
+      .then(data => setWeatherData(data))
+  }, [latitude, longitude])
 
 
 
