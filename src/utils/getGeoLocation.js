@@ -5,5 +5,15 @@ export  const getGeoLocation = async (value)=>{
 
     const result = await fetch(url);
     const data = await result.json();
-    console.log(data.features);
+    const coordinates = data.features[0].properties;
+    const lat = coordinates.extent[1];
+    const lon = coordinates.extent[0];
+    return({
+        name:coordinates.name,
+        latitude:lat,
+        longitude:lon
+    })
+
+
+    
 }

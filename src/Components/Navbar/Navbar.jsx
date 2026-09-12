@@ -36,7 +36,8 @@ const Navbar = () => {
     if (!cityInput.trim()) return;
 
     
-    getGeoLocation(cityInput);
+    const locationData = await getGeoLocation(cityInput);
+    console.log(locationData);
     
    
   };
