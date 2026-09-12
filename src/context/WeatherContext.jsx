@@ -6,7 +6,7 @@ export const WeatherContext = createContext();
 
 export const WeatherProvider = ({children})=>{
 
-    const [data,setData]= useState()
+    const [data,setData]= useState();
 
 
     return (

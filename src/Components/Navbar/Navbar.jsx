@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   CloudSun,
   MapPin,
@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { getGeoLocation } from "../../utils/getGeoLocation";
 import { getWeather } from "../../utils/getWeather";
+import { WeatherContext } from "../../context/WeatherContext";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -20,6 +21,8 @@ const Navbar = () => {
   const [cityName, setCityName] = useState('Agailjhara, Barishal'); // Displayed location state
   // const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const {data,setData}= use(WeatherContext);
+
 
   // ১. ইউজার নিজের কারেন্ট লোকেশন পাওয়ার ফাংশন
   const handleMyLocation = () => {
@@ -41,7 +44,8 @@ const Navbar = () => {
     const lat = locationData.latitude;
     const lon = locationData.longitude;
     const weatherData = await getWeather(lat,lon);
-    console.log(weatherData);
+    setData(weatherData);
+    
     
    
   };
