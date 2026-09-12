@@ -15,17 +15,18 @@ import { WeatherContext } from "../../context/WeatherContext";
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  // const [latitude, setLatitude] = useState('');
-  // const [longitude, setLongitude] = useState('');
+  const [lat, setLatitude] = useState('');
+  const [lon, setLongitude] = useState('');
   const [cityInput, setCityInput] = useState(''); // Search input state
   const [cityName, setCityName] = useState('Agailjhara, Barishal'); // Displayed location state
   // const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const {data,setData}= use(WeatherContext);
+  const { data, setData } = use(WeatherContext);
+  console.log(lat,lon);
 
 
   // ১. ইউজার নিজের কারেন্ট লোকেশন পাওয়ার ফাংশন
-  const handleMyLocation = () => {
+  const handleMyLocation = async() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         setLatitude(position.coords.latitude);
@@ -33,26 +34,28 @@ const Navbar = () => {
         setCityName("My Location");
       });
     }
+     const weatherData = await getWeather(lat, lon);
+        setData(weatherData);
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!cityInput.trim()) return;
 
-    
+
     const locationData = await getGeoLocation(cityInput);
-    const lat = locationData.latitude;
-    const lon = locationData.longitude;
-    const weatherData = await getWeather(lat,lon);
+    setLatitude(locationData.latitude);
+    setLongitude(locationData.longitude);
+    const weatherData = await getWeather(lat, lon);
     setData(weatherData);
-    
-    
-   
+
+
+
   };
 
- 
 
-  
+
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
