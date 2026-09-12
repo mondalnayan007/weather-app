@@ -9,15 +9,16 @@ import {
   Search
 } from "lucide-react";
 import { getGeoLocation } from "../../utils/getGeoLocation";
+import { getWeather } from "../../utils/getWeather";
 
 const Navbar = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
+  // const [latitude, setLatitude] = useState('');
+  // const [longitude, setLongitude] = useState('');
   const [cityInput, setCityInput] = useState(''); // Search input state
   const [cityName, setCityName] = useState('Agailjhara, Barishal'); // Displayed location state
-  const [weatherData, setWeatherData] = useState(null);
+  // const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   // ১. ইউজার নিজের কারেন্ট লোকেশন পাওয়ার ফাংশন
@@ -37,23 +38,17 @@ const Navbar = () => {
 
     
     const locationData = await getGeoLocation(cityInput);
-    console.log(locationData);
+    const lat = locationData.latitude;
+    const lon = locationData.longitude;
+    const weatherData = await getWeather(lat,lon);
+    console.log(weatherData);
     
    
   };
 
  
 
-  // // ৪. Weather API Call (Latitude ও Longitude চেঞ্জ হলে রান হবে)
-  // useEffect(() => {
-  //   if (!latitude || !longitude) return;
-
-  //   fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&past_days=10&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
-  //     .then(res => res.json())
-  //     .then(data => setWeatherData(data))
-  //     .catch(err => console.error("Weather Fetch Error:", err));
-  // }, [latitude, longitude]);
-
+  
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
